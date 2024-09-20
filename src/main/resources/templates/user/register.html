@@ -120,7 +120,7 @@
                 })
                 .then(data => {
                     console.log(data)
-                    if (data.result > 0) {
+                    if (data) {
                         resultId.innerText ='이미 사용중인 아이디입니다.';
                         resultId.style.color = 'red';
                         isUidOk = false;
@@ -261,12 +261,12 @@
                 console.log(e);
             }
         }
-/*
+
         btnAuthEmail.onclick = function(){
 
             const code = registerForm.auth.value;
 
-            fetch('/jboard/user/checkUser.do', {
+            fetch('/sboard/user/checkUserEmail', {
                 method: 'POST',
                 body: JSON.stringify({"code":code})
             })
@@ -279,7 +279,7 @@
                         resultEmail.style.color = 'green';
                         isEmailOk = true;
                     }else{
-                        resultEmail.innerText = '유효한 인증코드가 않습니다.';
+                        resultEmail.innerText = `유효한 인증코드가 아닙니다.${code}`;
                         resultEmail.style.color = 'red';
                         isEmailOk = false;
                     }
@@ -288,7 +288,9 @@
                     console.log(err);
                 });
         }
- */
+
+
+
 
         // 6.휴대폰 유효성 검사
         registerForm.hp.addEventListener('focusout', async function(){
@@ -458,7 +460,7 @@
         <footer>
             <p>
                 <span class="copyright">Copyrightⓒ 김철학(개발에반하다.)</span>
-                <span class="version">v1.0.1</span>
+                <span class="version">[[${appInfo.appName}]] ver.[[${appInfo.appVersion}]]</span>
             </p>
         </footer>
     </div>    
