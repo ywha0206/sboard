@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-        /*
+
     @GetMapping(value = {"/", "/index"})
     public String index(Model model) {
         //로그인 사용자 인증객체 가져오기
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        /*
         MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
 
 
@@ -32,11 +32,11 @@ public class MainController {
         }
 
 
+         */
         //model.addAttribute("user", user);
 
         return "index";
     }
-         */
 
     @GetMapping(value = {"/admin"})
     public String admin(){

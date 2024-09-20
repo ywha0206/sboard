@@ -55,6 +55,14 @@ public class UserService {
     public boolean checkUserIdExists(String uid){
         return userRepository.existsById(uid);
     }
-
+    public boolean checkUserNickExists(String nick){
+        return userRepository.findUserNick(nick) > 0;
+    }
+    public boolean checkUserHpExists(String hp){
+        return userRepository.findUserHp(hp) > 0;
+    }
+    public boolean checkUserEmailExists(String email){
+        return userRepository.findUserEmail(email) > 0;
+    }
 
 }

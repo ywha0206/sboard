@@ -32,9 +32,9 @@
                         아직 회원이 아니시면 회원으로 가입하세요.
                     </p>
                     <div style="text-align: right;">
-                        <a href="./findId.html">아이디 |</a>
-                        <a href="./findPw.html">비밀번호찾기 |</a>
-                        <a href="./terms.html">회원가입</a>
+                        <a href="#">아이디 |</a>
+                        <a href="#">비밀번호찾기 |</a>
+                        <a th:href="@{/user/terms}">회원가입</a>
                     </div>                    
                 </div>
             </section>
@@ -42,7 +42,7 @@
         <footer>
             <p>
                 <span class="copyright">Copyrightⓒ 김철학(개발에반하다.)</span>
-                <span class="version">v1.0.1</span>
+                <span class="version">[[${appInfo.appName}]] ver.[[${appInfo.appVersion}]]</span>
             </p>
         </footer>
     </div>    

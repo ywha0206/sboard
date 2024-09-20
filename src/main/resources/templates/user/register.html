@@ -94,6 +94,7 @@
         const resultHp = document.getElementsByClassName('resultHp')[0];
         const auth = document.getElementsByClassName('auth')[0];
 
+
         // 1.아이디 유효성 검사
         btnCheckUid.onclick = function() {
 
@@ -107,33 +108,33 @@
             }
             checkUserIdAvailability(uid);
         }
-            // 중복체크
-            function checkUserIdAvailability(uid) {
-            console.log(uid);
-                fetch('/sboard/user/checkUser?uid=' + uid)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('서버 응답 오류');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(data)
-                        if (data.result > 0) {
-                            resultId.innerText ='이미 사용중인 아이디입니다.';
-                            resultId.style.color = 'red';
-                            isUidOk = false;
-                        } else {
-                            resultId.innerText ='사용 가능한 아이디입니다.';
-                            resultId.style.color = 'green';
-                            isUidOk = true;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('에러:', error);
-                        showResult('아이디 확인 중 오류가 발생했습니다.', 'red');
-                    });
-            }
+        // 중복체크
+        function checkUserIdAvailability(uid) {
+        console.log(uid);
+            fetch('/sboard/user/checkUser?uid=' + uid)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 응답 오류');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    if (data.result > 0) {
+                        resultId.innerText ='이미 사용중인 아이디입니다.';
+                        resultId.style.color = 'red';
+                        isUidOk = false;
+                    } else {
+                        resultId.innerText ='사용 가능한 아이디입니다.';
+                        resultId.style.color = 'green';
+                        isUidOk = true;
+                    }
+                })
+                .catch(error => {
+                    console.error('에러:', error);
+                    showResult('아이디 확인 중 오류가 발생했습니다.', 'red');
+                });
+        }
 
 
         // 2.비밀번호 유효성 검사
@@ -175,21 +176,30 @@
         });
 
         // 4.별명 유효성 검사
-
-
-        btnCheckNick.addEventListener('click', function (){
+        btnCheckNick.addEventListener('click',function (){
             const nick = registerForm.nick.value;
+            const nickPram = encodeURI(encodeURIComponent(nick));
+
             if(!nick.match(reNick)){
                 resultNick.innerText = '별명이 유효하지 않습니다.';
                 resultNick.style.color = 'red';
                 return;
+            }else{
+                resultNick.innerText = '별명이 유효합니다.';
             }
-            console.log(nick)
-            /*
-            fetch('/user/checkUser?type=nick&value='+nick)
-                .then(response => response.json())
+            console.log(nick);
+            checkUserNick(nickPram);
+        })
+        function checkUserNick(nick){
+            fetch('/sboard/user/checkUserNick?nick='+nick)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('서버 응답 오류');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    console.log(data);
+                    console.log("data"+data);
                     if(data.result > 0){
                         resultNick.innerText = '이미 사용중인 별명입니다.';
                         resultNick.style.color = 'red';
@@ -199,22 +209,21 @@
                         resultNick.style.color = 'green';
                         isNickOk = true;
                     }
-                })
-                .catch(err => {
+                }).catch(err => {
                     console.log(err);
                 });
 
-             */
-        })
 
-/*
+        }
+
+
         // 5.이메일 유효성 검사
         let preventDblClick = false;
 
         btnSendEmail.onclick = async function(){
 
             const email = registerForm.email.value;
-
+            console.log(email)
             // 이중 클릭 방지
             if(preventDblClick){
                 return;
@@ -225,12 +234,15 @@
                 resultEmail.innerText = '유효한 이메일이 아닙니다.';
                 resultEmail.style.color = 'red';
                 return;
+            }else{
+                resultEmail.innerText = '유효한 이메일입니다.';
+                resultEmail.style.color = 'green';
             }
 
             try{
                 preventDblClick = true;
 
-                const response = await fetch('/jboard/user/checkUser.do?type=email&value='+email);
+                const response = await fetch('/sboard/user/checkUserEmail?email='+email);
                 const data = await response.json();
                 console.log(data);
 
@@ -249,7 +261,7 @@
                 console.log(e);
             }
         }
-
+/*
         btnAuthEmail.onclick = function(){
 
             const code = registerForm.auth.value;
@@ -276,14 +288,20 @@
                     console.log(err);
                 });
         }
+ */
 
         // 6.휴대폰 유효성 검사
         registerForm.hp.addEventListener('focusout', async function(){
 
             const hp = registerForm.hp.value;
+            if(!hp.match(reHp)){
+                resultHp.innerText = '전화번호가 유효하지 않습니다.';
+                resultHp.style.color = 'red';
+                return;
+            }
 
             try{
-                const response = await fetch('/jboard/user/checkUser.do?type=hp&value='+hp);
+                const response = await fetch('/sboard/user/checkUserHp?hp='+hp);
                 const data = await response.json();
                 console.log(data);
 
@@ -292,7 +310,8 @@
                     resultHp.style.color = 'red';
                     isHpOk = false;
                 }else{
-                    resultHp.innerText = '';
+                    resultHp.innerText = '사용할 수 있는 번호입니다.';
+                    resultHp.style.color = 'green';
                     isHpOk = true;
                 }
 
@@ -345,7 +364,6 @@
         }
 
 
- */
     })
 </script>
 <body>
