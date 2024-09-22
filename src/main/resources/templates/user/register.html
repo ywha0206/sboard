@@ -246,7 +246,7 @@
                 const data = await response.json();
                 console.log(data);
 
-                if(data.result > 0){
+                if(data){
                     resultEmail.innerText = '이미 사용중인 이메일 입니다.';
                     resultEmail.style.color = 'red';
                     isEmailOk = false;
@@ -268,6 +268,7 @@
 
             fetch('/sboard/user/checkUserEmail', {
                 method: 'POST',
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({"code":code})
             })
                 .then(resp => resp.json())
@@ -287,6 +288,8 @@
                 .catch(err => {
                     console.log(err);
                 });
+
+
         }
 
 

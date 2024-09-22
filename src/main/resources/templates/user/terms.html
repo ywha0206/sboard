@@ -5,6 +5,29 @@
     <title>약관</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
+<script>
+    function checkAll() {
+        // 사이트 이용약관과 개인정보 취급방침 체크박스 선택
+        const termsCheckbox = document.querySelector('.terms');
+        const privacyCheckbox = document.querySelector('.privacy');
+
+        // 두 개의 체크박스가 모두 선택되었는지 확인
+        if (!termsCheckbox.checked || !privacyCheckbox.checked) {
+            alert('모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.');
+            return false; // 모두 선택되지 않으면 링크 실행 중지
+        }
+
+        return true; // 모두 선택되면 정상적으로 링크 이동
+    }
+    window.onload = function () {
+        // "다음" 버튼 클릭 시 checkAll 함수 호출
+        document.querySelector('.btnNext').addEventListener('click', function (event) {
+            if (!checkAll()) {
+                event.preventDefault(); // 모든 체크박스가 선택되지 않으면 링크 이동 중지
+            }
+        });
+    };
+</script>
 <body>
     <div id="wrapper">
         <header>

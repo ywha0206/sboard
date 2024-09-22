@@ -80,21 +80,20 @@ public class UserController {
     }
 
     @GetMapping( "/user/checkUserEmail")
-    public ResponseEntity<Map<String,Object>> checkUserEmail(HttpSession session,
+    public ResponseEntity<Boolean> checkUserEmail(HttpSession session,
             @RequestParam("email")String email, Model model){
-        Map<String, Object> response = new HashMap<>();
         boolean exists = userService.checkUserEmailExists(email);
-        response.put("result", exists ? 1 : 0);
 
         //이메일 인증번호 발송하기
         int code =  emailService.sendEmailCode(session, email);
         model.addAttribute("code", code);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(exists);
     }
     @ResponseBody
-    @PostMapping("/checkUserEmail")
+    @PostMapping("/user/checkUserEmail")
     public ResponseEntity<?> checkEmail(HttpSession session, @RequestBody Map<String, String> jsonData) {
+
         String receiveCode = jsonData.get("code");
         String sessionCode = (String) session.getAttribute("code");
         if(sessionCode.equals(receiveCode)){
