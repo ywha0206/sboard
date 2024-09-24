@@ -4,18 +4,21 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.sboard'
-version = '0.0.3-SNAPSHOT'
+ext {
+    group = 'com.sboard'
+    version = '0.0.4-SNAPSHOT'
+}
+
+
+processResources {
+    filesMatching('**/application.yml') {
+        expand(project.properties)  // version 값을 확장
+    }
+}
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
     }
 }
 
@@ -38,11 +41,36 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    // Mail 설정
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.3.3'
 
+    // Thymeleaf Spring Security
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6', version: '3.1.2.RELEASE'
+
+    // ModelMapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
+
+    // QueryDSL 설정
+    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+def queryDslDir = "src/main/generated"
+
+sourceSets {
+    main.java.srcDirs queryDslDir
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(queryDslDir)
+}
+
+clean {
+    delete file(queryDslDir)
 }

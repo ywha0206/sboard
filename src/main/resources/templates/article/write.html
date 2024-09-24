@@ -7,20 +7,15 @@
 </head>
 <body>
     <div id="wrapper">
-        <header>
-            <h3>Board System</h3>
-            <p>
-                <span>홍길동</span>님 반갑습니다.
-                <a href="#">[로그아웃]</a>
-            </p>
-        </header>
+        <th:block th:include="/article/header.html"/>
         <main id="board">
             <section class="write">
                 <nav>
                     <h1>글쓰기</h1>
                 </nav>
-                <form action="#">
-                    <table border="0">                        
+                <form th:action="@{/article/write}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}" />
+                    <table border="0">
                         <tr>
                             <th>제목</th>
                             <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
@@ -34,25 +29,24 @@
                         <tr>
                             <th>파일</th>
                             <td>
-                                <input type="file" name="file"/>
+                                <p style="margin-bottom: 6px;">
+                                    최대 2개 파일 첨부 가능, 각 파일당 최대 10MB까지 가능
+                                </p>
+                                <input type="file" name="files"/>
+                                <input type="file" name="files"/>
                             </td>
                         </tr>
                     </table>
                     
                     <div>
-                        <a href="list.html" class="btn btnCancel">취소</a>
+                        <a th:href="@{/article/list}" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>
 
             </section>
         </main>
-        <footer>
-            <p>
-                <span class="copyright">Copyrightⓒ 김철학(개발에반하다.)</span>
-                <span class="version">v1.0.1</span>
-            </p>
-        </footer>
+        <th:block th:include="/article/footer.html"/>
     </div>    
 </body>
 </html>

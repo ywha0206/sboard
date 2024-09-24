@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <script>
+    /*
     function checkAll() {
         // 사이트 이용약관과 개인정보 취급방침 체크박스 선택
         const termsCheckbox = document.querySelector('.terms');
@@ -27,6 +28,8 @@
             }
         });
     };
+    
+     */
 </script>
 <body>
     <div id="wrapper">
@@ -62,12 +65,7 @@
 
             </section>
         </main>
-        <footer>
-            <p>
-                <span class="copyright">Copyrightⓒ 김철학(개발에반하다.)</span>
-                <span class="version">[[${appInfo.appName}]] ver.[[${appInfo.appVersion}]]</span>
-            </p>
-        </footer>
+        <th:block th:include="/article/footer.html"/>
     </div>    
 </body>
 </html>

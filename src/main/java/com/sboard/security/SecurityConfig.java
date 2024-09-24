@@ -31,7 +31,7 @@ public class SecurityConfig {
 
         //로그인 설정
         http.formLogin(login -> login.loginPage("/user/login")
-                .defaultSuccessUrl("/user/success")//컨트롤러 요청 주소
+                .defaultSuccessUrl("/article/list")//컨트롤러 요청 주소
                 .failureUrl("/user/login?success=100")
                 .usernameParameter("uid")
                 .passwordParameter("pass"));
@@ -44,10 +44,8 @@ public class SecurityConfig {
 
         // 인가 설정
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
-                .requestMatchers("/staff/**").hasAnyRole("ADMIN", "MANAGER", "STAFF")
+                .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/article/**").authenticated()
                 .anyRequest().permitAll());
 
         //보안 설정
