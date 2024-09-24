@@ -4,68 +4,60 @@
     <meta charset="UTF-8">
     <title>약관</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-</head>
-<script>
-    /*
-    function checkAll() {
-        // 사이트 이용약관과 개인정보 취급방침 체크박스 선택
-        const termsCheckbox = document.querySelector('.terms');
-        const privacyCheckbox = document.querySelector('.privacy');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const termsCheckbox = document.querySelector('input[type="checkbox"].terms');
+            const privacyCheckbox = document.querySelector('input[type="checkbox"].privacy');
+            const nextButton = document.querySelector('.btnNext');
 
-        // 두 개의 체크박스가 모두 선택되었는지 확인
-        if (!termsCheckbox.checked || !privacyCheckbox.checked) {
-            alert('모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.');
-            return false; // 모두 선택되지 않으면 링크 실행 중지
-        }
+            nextButton.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 동작을 항상 멈춥니다.
 
-        return true; // 모두 선택되면 정상적으로 링크 이동
-    }
-    window.onload = function () {
-        // "다음" 버튼 클릭 시 checkAll 함수 호출
-        document.querySelector('.btnNext').addEventListener('click', function (event) {
-            if (!checkAll()) {
-                event.preventDefault(); // 모든 체크박스가 선택되지 않으면 링크 이동 중지
-            }
+                if (!termsCheckbox.checked || !privacyCheckbox.checked) {
+                    alert("사이트 이용약관과 개인정보 취급방침에 모두 동의해야 회원가입이 가능합니다.");
+                } else {
+                    // 체크박스가 모두 체크되었을 때 다음 페이지로 이동
+                    window.location.href = this.getAttribute('href');
+                }
+            });
         });
-    };
-    
-     */
-</script>
+    </script>
+</head>
 <body>
-    <div id="wrapper">
-        <header>
-            <h3>Board System</h3>
-        </header>
-        <main id="user">
-            <section class="terms">
-                <h2 class="tit">사이트 이용약관</h2>
-                <table border="1">                    
-                    <tr>
-                        <td>
-                            <textarea name="terms" th:text="${terms.terms}">약관내용</textarea>
-                            <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
-                        </td>
-                    </tr>
-                </table>
+<div id="wrapper">
+    <header>
+        <h3>Board System</h3>
+    </header>
+    <main id="user">
+        <section class="terms">
+            <h2 class="tit">사이트 이용약관</h2>
+            <table border="1">
+                <tr>
+                    <td>
+                        <textarea name="terms" th:text="${terms.terms}" readonly>약관내용</textarea>
+                        <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
+                    </td>
+                </tr>
+            </table>
 
-                <h2 class="tit">개인정보 취급방침</h2>
-                <table border="1">                    
-                    <tr>
-                        <td>
-                            <textarea name="privacy" th:text="${terms.privacy}">약관내용</textarea>
-                            <label><input type="checkbox" class="privacy">&nbsp;동의합니다.</label>
-                        </td>
-                    </tr>
-                </table>
-                
-                <div>
-                    <a th:href="@{/user/login}" class="btn btnCancel">취소</a>
-                    <a th:href="@{/user/register}" class="btn btnNext">다음</a>
-                </div>
+            <h2 class="tit">개인정보 취급방침</h2>
+            <table border="1">
+                <tr>
+                    <td>
+                        <textarea name="privacy" th:text="${terms.privacy}" readonly>약관내용</textarea>
+                        <label><input type="checkbox" class="privacy">&nbsp;동의합니다.</label>
+                    </td>
+                </tr>
+            </table>
 
-            </section>
-        </main>
-        <th:block th:include="/article/footer.html"/>
-    </div>    
+            <div>
+                <a th:href="@{/user/login}" class="btn btnCancel">취소</a>
+                <a th:href="@{/user/register}" class="btn btnNext">다음</a>
+            </div>
+
+        </section>
+    </main>
+    <th:block th:include="/article/footer.html"/>
+</div>
 </body>
 </html>

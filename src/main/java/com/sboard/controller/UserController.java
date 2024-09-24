@@ -121,4 +121,14 @@ public class UserController {
     public String success(){
         return "/user/success";
     }
+
+    @GetMapping("/user/findId")
+    public String findId() {
+        return "/user/findId";
+    }
+
+    @GetMapping("/user/findPass")
+    public String findPass() {
+        return "/user/findPass";
+    }
 }

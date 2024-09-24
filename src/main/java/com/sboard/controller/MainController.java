@@ -14,42 +14,16 @@ public class MainController {
 
 
     @GetMapping(value = {"/", "/index"})
-    public String index(Model model) {
-        //로그인 사용자 인증객체 가져오기
+    public String index(Authentication authentication){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        /*
-        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+        if(authentication !=null && authentication.isAuthenticated()){
+            // 로그인 했을 경우
+            return "redirect:/article/list";
 
-
-        if(){
-
+        }else {
+            // 로그인 안했을 경우
+            return "redirect:/user/login";
         }
 
-        User user = null;
-        if (myUserDetails != null) {
-            user= myUserDetails.getUser();
-        }
-
-
-         */
-        //model.addAttribute("user", user);
-
-        return "index";
-    }
-
-    @GetMapping(value = {"/admin"})
-    public String admin(){
-        return "/admin/index";
-    }
-
-    @GetMapping(value = {"/manager", "/manager/index"})
-    public String manager(){
-        return "/manager/index";
-    }
-
-    @GetMapping(value = {"/staff", "/staff/index"})
-    public String staff(){
-        return "/staff/index";
     }
 }
