@@ -38,6 +38,8 @@ public class ArticleDTO {
     //추가필드
     private String nick;
 
+    private List<FileDTO> fileList;
+
     /*
     Entity 변환 메서드 대신 ModelMapper 사용
     */

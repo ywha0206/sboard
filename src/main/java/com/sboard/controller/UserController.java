@@ -54,6 +54,13 @@ public class UserController {
         return "/user/register";
     }
 
+    @PostMapping("/user/register")
+    public String register(UserDTO userDTO){
+        userService.insertUser(userDTO);
+        return "redirect:/user/login";
+    }
+
+
     @GetMapping( "/user/checkUser")
     public ResponseEntity<Boolean> checkUser(@RequestParam("uid")String uid){
         boolean exists = userService.checkUserIdExists(uid);
@@ -109,12 +116,6 @@ public class UserController {
 
             return ResponseEntity.ok().body(resultMap);
         }
-    }
-
-        @PostMapping("/user/register")
-    public String register(UserDTO userDTO){
-        userService.insertUser(userDTO);
-        return "redirect:/user/login";
     }
 
     @GetMapping("/user/success")//로그인한 사용자 정보는 Authentication에 저장(세션이랑 같은 개념) 에 저장됨

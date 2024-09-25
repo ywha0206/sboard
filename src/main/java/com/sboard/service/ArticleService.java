@@ -5,6 +5,8 @@ import com.sboard.dto.ArticleDTO;
 import com.sboard.dto.PageRequestDTO;
 import com.sboard.dto.PageResponseDTO;
 import com.sboard.entity.Article;
+import com.sboard.entity.FileEntity;
+import com.sboard.entity.User;
 import com.sboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -37,6 +40,21 @@ public class ArticleService {
     }
 
     public ArticleDTO selectArticle(int no){
+
+        Optional<Article> optView =articleRepository.findById(no);
+
+        Article article = null;
+        if(optView.isPresent()) {
+            article = optView.get();
+
+            int count = article.getHit();
+            article.setHit(count + 1);
+
+            articleRepository.save(article);
+
+            ArticleDTO dto =  modelMapper.map(article, ArticleDTO.class);
+            return dto;
+        }
         return null;
     }
 
@@ -77,6 +95,10 @@ public class ArticleService {
     public void updateArticle(ArticleDTO articleDTO) {
 
     }
+
+
+
+
 
     public void deleteArticle(int no){
 

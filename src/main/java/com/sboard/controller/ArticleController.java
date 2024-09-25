@@ -1,10 +1,11 @@
 package com.sboard.controller;
 
-import com.sboard.dto.ArticleDTO;
-import com.sboard.dto.FileDTO;
-import com.sboard.dto.PageRequestDTO;
-import com.sboard.dto.PageResponseDTO;
+import com.sboard.dto.*;
+import com.sboard.entity.Article;
+import com.sboard.entity.Comment;
+import com.sboard.entity.User;
 import com.sboard.service.ArticleService;
+import com.sboard.service.CommentService;
 import com.sboard.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final FileService fileService;
+    private final CommentService commentService;
 
 
     @GetMapping("/article/list")
@@ -40,8 +44,16 @@ public class ArticleController {
         return "/article/modify";
     }
 
+    //@RequestParam("no") 생략 가능
     @GetMapping("/article/view")
-    public String view(){
+    public String view(@RequestParam("no")int no, Model model){
+
+        ArticleDTO articleDTO = articleService.selectArticle(no);
+        model.addAttribute("article",articleDTO);
+
+        List<CommentDTO> comments  = commentService.selectCommentAll(no);
+        model.addAttribute("comments",comments);
+
         return "/article/view";
     }
 
