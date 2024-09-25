@@ -8,6 +8,7 @@ import com.sboard.entity.Article;
 import com.sboard.entity.FileEntity;
 import com.sboard.entity.User;
 import com.sboard.repository.ArticleRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -58,6 +59,7 @@ public class ArticleService {
         return null;
     }
 
+    @Transactional
     public PageResponseDTO selectArticleAll(PageRequestDTO pageRequestDTO) {
 
         Pageable pageable = pageRequestDTO.getPageable("no");
