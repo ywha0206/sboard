@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <title>로그인</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script>
+        window.onload=function (){
+            // 네이버 로그인
+            let naverLogin = new naver.LoginWithNaverId(
+                {
+                    clientId: "client id 입력",
+                    callbackUrl: "callback url 입력",
+                    isPopup: false,
+                    callbackHandle: true
+                }
+            );
+            naverLogin.init();
+            window.addEventListener('load', function () {
+                naverLogin.getLoginStatus(function (status) {
+                    if (status) {
+                        const token = naverLogin.user.id;
+                        apiLogin(`naver_${token}`, `naver_pw_${token}`, 2);
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -24,7 +47,14 @@
                         </tr>
                     </table>
                     <input type="submit" value="로그인" class="btnLogin"/>
-                    
+
+                    <a th:href="@{/oauth2/authorization/google}">
+                        <img th:src="@{/img/web_light_rd_SI@1x.png}" alt="google">
+                    </a>
+
+                    <a id="naverIdLogin_loginButton">
+                        <img style="height:50px; width:200px;" th:src="@{/img/btnW_완성형.png}">
+                    </a>
                 </form>
                 <div>
                     <h3>회원 로그인 안내</h3>
