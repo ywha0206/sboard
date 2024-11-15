@@ -38,9 +38,6 @@ public class SecurityConfig {
                 .loginPage("/user/login")
                 .userInfoEndpoint(endpoint -> endpoint.userService(myOauth2UserService)));
 
-
-
-
         // 인가 설정
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/user/**").permitAll()

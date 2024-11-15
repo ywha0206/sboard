@@ -30,7 +30,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-
     public void selectComment() {}
     public List<CommentDTO> selectCommentAll(int parent) {
         List<Comment> comments= commentRepository.findAllByParent(parent);
@@ -43,7 +42,6 @@ public class CommentService {
         return commentDTOS;
     }
     public void updateComment(CommentDTO commentDTO) {}
-
 
     public ResponseEntity<?> deleteComment(int no) {
 

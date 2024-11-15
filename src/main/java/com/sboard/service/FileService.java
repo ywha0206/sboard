@@ -42,21 +42,16 @@ public class FileService {
 
         // 파일 업로드 경로 파일 객체 생성
         File fileUploadPath = new File(uploadPath);
-
         // 파일 업로드 디렉터리가 존재하지 않으면 디렉터리 생성
         if(!fileUploadPath.exists()){
             fileUploadPath.mkdirs();
         }
-
         // 파일 업로드 시스템 경로 구하기
         String path = fileUploadPath.getAbsolutePath();
-
         // 파일 정보 객체 가져오기
         List<MultipartFile> files = articleDTO.getFiles();
-
         // 업로드 파일 정보 객체 리스트 생성
         List<FileDTO> uploadedFiles = new ArrayList<>();
-
         for(MultipartFile file : files) {
 
             if(!file.isEmpty()){
@@ -119,8 +114,6 @@ public class FileService {
             return ResponseEntity
                     .notFound().build();
         }
-
-
     }
 
     public void insertFile(FileDTO fileDTO) {

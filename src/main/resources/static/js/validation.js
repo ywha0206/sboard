@@ -102,7 +102,7 @@
     // 중복체크
     function checkUserIdAvailability(uid) {
     console.log(uid);
-    fetch('/sboard/user/checkUser?uid=' + uid)
+    fetch('/user/checkUser?uid=' + uid)
     .then(response => {
     if (!response.ok) {
     throw new Error('서버 응답 오류');
@@ -182,7 +182,7 @@
     checkUserNick(nickPram);
 })
     function checkUserNick(nick){
-    fetch('/sboard/user/checkUserNick?nick='+nick)
+    fetch('/user/checkUserNick?nick='+nick)
     .then(response => {
     if (!response.ok) {
     throw new Error('서버 응답 오류');
@@ -233,7 +233,7 @@
     try{
     preventDblClick = true;
 
-    const response = await fetch('/sboard/user/checkUserEmail?email='+email);
+    const response = await fetch('/user/checkUserEmail?email='+email);
     const data = await response.json();
     console.log(data);
 
@@ -257,7 +257,7 @@
 
     const code = registerForm.auth.value;
 
-    fetch('/sboard/user/checkUserEmail', {
+    fetch('/user/checkUserEmail', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({"code":code})
@@ -297,7 +297,7 @@
 }
 
     try{
-    const response = await fetch('/sboard/user/checkUserHp?hp='+hp);
+    const response = await fetch('/user/checkUserHp?hp='+hp);
     const data = await response.json();
     console.log(data);
 

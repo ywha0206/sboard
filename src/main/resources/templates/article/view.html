@@ -28,7 +28,7 @@
 
                     console.log(no);
 
-                    const data = await fetchDelete('/sboard/comment/'+no);
+                    const data = await fetchDelete('/comment/'+no);
 
                     console.log(data)
 
@@ -53,7 +53,7 @@
                 };
                 console.log(jsonData)
 
-                const data = await fetchPost('/sboard/comment',jsonData)
+                const data = await fetchPost('/comment',jsonData)
                 console.log(data)
                 if(data!=null){
                     const html = `<article>

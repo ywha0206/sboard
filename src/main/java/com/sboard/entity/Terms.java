@@ -16,9 +16,9 @@ import lombok.*;
 @Table(name="terms")
 public class Terms {
     @Id
-    @Column(columnDefinition = "longtext", nullable = false)
+    @Column(length = 255)
     private String terms;
-    @Column(columnDefinition = "longtext", nullable = false)
+    @Column(length = 255)
     private String privacy;
 
     public TermsDTO toDTO() {

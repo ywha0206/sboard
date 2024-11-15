@@ -41,15 +41,6 @@ public class UserService {
         }
         return null;
     }
-
-    public TermsDTO selectTerms() {
-        Terms terms = termsRepository.findterms();
-        TermsDTO termsDTO = terms.toDTO();
-
-        return termsDTO;
-
-    }
-
     public boolean checkUserIdExists(String uid){
         return userRepository.existsById(uid);
     }
@@ -63,4 +54,10 @@ public class UserService {
         return userRepository.findUserEmail(email) > 0;
     }
 
+    public TermsDTO selectTerms() {
+        Terms terms = termsRepository.findterms();
+        TermsDTO termsDTO = terms.toDTO();
+
+        return termsDTO;
+    }
 }
